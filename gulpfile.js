@@ -39,7 +39,7 @@ gulp.task('js', function() {
     .pipe(gulp.dest(DEST));
 });
 
-//Output both a minified and non-minified version of SASS
+//Output both a minified and non-minified version of CSS
 gulp.task('sass', function () {
   return gulp.src('src/components/**/*.scss')
       .pipe(sass())
