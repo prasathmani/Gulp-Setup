@@ -1,7 +1,7 @@
 var odds = evens.map(v => v + 1);
-var nums = evens.map((v, i) => v + i);
+const nums = evens.map((v, i) => v + i);
 
-let am = 'Developer';
+let check = 'Developer';
 
 class Hello {
     constructor() {
