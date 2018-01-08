@@ -1,0 +1,153 @@
+.header-component {
+  color: #000;
+  width: 100%;
+  display: flex;
+  z-index: 2;
+  padding-left: 5px;
+  padding-right: 5px;
+  position: absolute;
+  top: 0;
+  // margin-bottom: -25px;
+  &.padding-top-default {
+    padding-top: 0;
+  }
+
+  &.padding-bottom-default {
+    padding-bottom: 0;
+  }
+
+  .last {
+    padding-right: 0 !important;
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .wrap {
+    overflow: visible;
+  }
+
+  .wrap-logo {
+    padding: 0;
+  }
+
+  h1 {
+    margin: 0;
+    padding: 0;
+  }
+
+  .logo {
+    display: block;
+    line-height: 70px;
+    vertical-align: middle;
+    max-width: 420px;
+    /* padding: 5px 20px 5px 5px; */
+    padding: 5px 60px 10px 5px;
+    overflow: hidden;
+
+    span.c-xs-6 {
+      padding: 0;
+    }
+
+    .TNC-logo {
+      width: 181px;
+      padding-right: 10px;
+      margin-right: 10px;
+      border-right: solid 2px #333;
+      max-width: 100%;
+      height: auto;
+      display: inline-block;
+    }
+
+    span.col-1-2 {
+      padding: 0;
+    }
+
+    span.c-xs-6.last {
+      overflow: visible;
+    }
+
+    .PBT-logo {
+      width: 181px;
+      max-width: 93%;
+      height: auto;
+      margin-left: 10px;
+    }
+  }
+
+  .main-nav {
+    display: none;
+  }
+  /* Mobile menu */
+  .menu-link {
+    display: inline-block;
+    width: 35px;
+    height: 35px;
+    background: none;
+    position: absolute;
+    top: 28px;
+    right: 10px;
+    font: normal 42px/42px sans-serif;
+    color: #333;
+
+    .toggle-close {
+      display: none;
+    }
+
+    &.active {
+      .toggle-close {
+        display: block;
+        padding-left: 6px;
+        font-size: 52px;
+      }
+
+      .toggle-open {
+        display: none;
+      }
+    }
+  }
+
+  .wrap-mobile-nav {
+    .menu {
+      display: block;
+      height: 0;
+      overflow: hidden;
+      list-style-type: none;
+      padding: 0;
+      margin: 0 -5px;
+
+      &.active {
+        height: auto;
+        overflow: visible;
+        display: block;
+      }
+
+      a {
+        color: #fff;
+        text-shadow: none;
+        text-decoration: none;
+        background-color: #333;
+        display: inline-block;
+        line-height: 1em;
+        padding: 1em;
+        border-bottom: 1px solid #000;
+        width: 100%;
+
+        &:hover {
+          color: #aaa;
+        }
+      }
+
+      ul.sub-menu {
+        padding: 0;
+
+        a {
+          background: #222;
+        }
+      }
+    }
+  }
+}

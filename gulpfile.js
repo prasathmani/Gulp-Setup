@@ -4,14 +4,32 @@ var uglify = require('gulp-uglify');
 var babel = require('gulp-babel');
 var mocha = require('gulp-mocha');
 var sass = require('gulp-sass');
-
+var htmlmin = require('gulp-htmlmin');
+var extname = require('gulp-extname');
+var assemble = require('assemble');
+var hbscompiler = assemble();
 
 //file path
 var DEST = './build';
 
+gulp.task('load', function(cb) {
+   hbscompiler.layouts('templates/layouts/*.hbs');
+   hbscompiler.pages('src/components/**/*.hbs');
+  //hbscompiler.pages('templates/pages/*.hbs');
+  cb();
+});
+ 
+gulp.task('assemble', ['load'], function() {
+  return hbscompiler.toStream('pages')
+    .pipe(hbscompiler.renderFile())
+    .pipe(htmlmin())
+    .pipe(extname())
+    .pipe(hbscompiler.dest(DEST));
+});
+
 //Output both a minified and non-minified version JS
 gulp.task('js', function() {
-  return gulp.src('src/js/*.js')
+  return gulp.src('src/components/**/*.js')
     // This will output the non-minified version
     .pipe(babel({ignore: 'gulpfile.js'}))
     .pipe(gulp.dest(DEST))
@@ -23,7 +41,7 @@ gulp.task('js', function() {
 
 //Output both a minified and non-minified version of SASS
 gulp.task('sass', function () {
-  return gulp.src('src/scss/*.scss')
+  return gulp.src('src/components/**/*.scss')
       .pipe(sass())
       .pipe(gulp.dest(DEST))
       .pipe(sass({outputStyle: 'compressed'}))
@@ -47,4 +65,4 @@ gulp.task('watch', () => {
   return gulp.watch('src/js/*.js', ['es6']);
 });
 
-gulp.task('default', ['sass', 'js']);
+gulp.task('default', ['sass', 'js', 'assemble']);
