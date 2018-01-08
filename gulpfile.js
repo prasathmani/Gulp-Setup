@@ -3,17 +3,14 @@ var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
 var babel = require('gulp-babel');
 var mocha = require('gulp-mocha');
-var log = require('gulplog');
-var sass = require('gulp-sass');            //compiles SASS
-var minifyCss = require('gulp-minify-css'); //minifies css
-var concat = require('gulp-concat');        //joins multiple files into one
-var rename = require('gulp-rename');        //renames files
+var sass = require('gulp-sass');
+
 
 //file path
 var DEST = './build';
 
-//Output both a minified and non-minified version
-gulp.task('js-non-min', function() {
+//Output both a minified and non-minified version JS
+gulp.task('js', function() {
   return gulp.src('src/js/*.js')
     // This will output the non-minified version
     .pipe(babel({ignore: 'gulpfile.js'}))
@@ -22,6 +19,16 @@ gulp.task('js-non-min', function() {
     .pipe(uglify())
     .pipe(rename({ extname: '.min.js' }))
     .pipe(gulp.dest(DEST));
+});
+
+//Output both a minified and non-minified version of SASS
+gulp.task('sass', function () {
+  return gulp.src('src/scss/*.scss')
+      .pipe(sass())
+      .pipe(gulp.dest(DEST))
+      .pipe(sass({outputStyle: 'compressed'}))
+      .pipe(rename({ extname: '.min.css' }))
+      .pipe(gulp.dest(DEST));
 });
 
 //ES6 - convert javascript from ES6 to ES5 using Babel
@@ -34,11 +41,10 @@ gulp.task('es6', () => {
 gulp.task('mocha', function() {
   return gulp.src(['test/*.js'], {read: false})
               .pipe(mocha({reporter: 'list'}))
-              .on('error', log.error)
 });
 
 gulp.task('watch', () => {
   return gulp.watch('src/js/*.js', ['es6']);
 });
 
-gulp.task('default', ['es6', 'watch']);
+gulp.task('default', ['sass', 'js']);
