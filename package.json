@@ -1,0 +1,24 @@
+{
+  "name": "gulpsetup",
+  "version": "1.0.0",
+  "description": "Setup project using gulp",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/UjjwalUpadhyay/GulpRepo.git"
+  },
+  "keywords": [
+    "Gulp",
+    "Project",
+    "setup"
+  ],
+  "author": "Prasath Mani",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/UjjwalUpadhyay/GulpRepo/issues"
+  },
+  "homepage": "https://github.com/UjjwalUpadhyay/GulpRepo#readme"
+}
