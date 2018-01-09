@@ -8,6 +8,8 @@ var htmlmin = require('gulp-htmlmin');
 var extname = require('gulp-extname');
 var assemble = require('assemble');
 var hbscompiler = assemble();
+var marked = require('marked');
+var sitemap = require('gulp-sitemap-generator');
 
 //file path
 var DEST = './build';
@@ -61,8 +63,19 @@ gulp.task('mocha', function() {
               .pipe(mocha({reporter: 'list'}))
 });
 
+gulp.task('html', () => {
+  return gulp.src(['/build/**/*.html'])
+      .pipe(sitemap({
+        'dest': 'dest',
+        'app': 'build',
+        'name' : 'index.html'
+      }))
+      .pipe(gulp.dest('/dest'))
+})
+
 gulp.task('watch', () => {
   return gulp.watch('src/js/*.js', ['es6']);
 });
 
 gulp.task('default', ['sass', 'js', 'assemble']);
+

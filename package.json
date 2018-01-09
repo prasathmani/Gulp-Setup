@@ -30,10 +30,13 @@
     "gulp-babel": "^7.0.0",
     "gulp-extname": "^0.2.2",
     "gulp-htmlmin": "^4.0.0",
+    "gulp-inject": "^4.3.0",
     "gulp-mocha": "^5.0.0",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^3.1.0",
-    "gulp-uglify": "^3.0.0"
+    "gulp-sitemap-generator": "^0.1.6",
+    "gulp-uglify": "^3.0.0",
+    "marked": "^0.3.12"
   },
   "dependencies": {}
 }

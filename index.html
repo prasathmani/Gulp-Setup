@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en_US">
+
+<head>
+    <title>Home</title>
+</head>
+
+<body>
+    <div class="left">
+        <table>
+            <thead>
+                <tr>
+                    <th><span>filename</span></th>
+                    <th><span>author</span></th>
+                    <th><span>description</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <% _.each(maps, function(m) { %>
+                <tr>
+                    <td><a href="<%= m.href %>" target="_blank"><%= m.title %></a></td>
+                    <td><span><%= m.author %></span></td>
+                    <td><span><%= m.description %></span></td>
+                </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+    <div class="right">
+    </div>
+</body>
+</html>
