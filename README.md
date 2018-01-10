@@ -16,33 +16,13 @@ Node
 
 ### Installing
 
-A step by step series of examples that tell you have to get a development env running
 
-Say what the step will be
+1. npm install
 
-```
-npm install
-```
+2. gulp
 
-And repeat
+3. gulp build-sitemap
 
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-gulp unittest
-```
 
 ### And coding style tests
 
