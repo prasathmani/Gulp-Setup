@@ -18,6 +18,7 @@ var path = require('path');
 var template = require('gulp-template');
 var runSequence = require('run-sequence');
 var inject = require('gulp-inject');
+var markdown = require('gulp-markdown');
 //var handlebars = require('gulp-compile-handlebars');
 
 //file path
@@ -98,6 +99,7 @@ gulp.task('gettreejson2', function() {
         obj = {};
         obj['title'] = children[i].children[0].name.replace(".html", ""); 
         obj['path'] = '/build/'+ children[i].children[0].relative.replace("\\", "/");
+        obj['readme'] = '/build/'+ children[i].children[0].name.replace(".html", "") + '/README.md';
         arr.push(obj);
     }
     return {"maps": arr};   
@@ -121,6 +123,12 @@ gulp.task('sitemap', function() {
     .pipe(gulp.dest('./sitemap'));
 });
 
+gulp.task('readmdtohtml',() => {
+  gulp.src('src/components/**/*.md')
+        .pipe(markdown())
+        .pipe(gulp.dest(DEST))
+})
+
 gulp.task('watch', () => {
   return gulp.watch('src/js/*.js', ['es6']);
 });
@@ -130,5 +138,5 @@ gulp.task('build-sitemap', function (cb) {
 });
 // gulp.task('build-sitemap', ['gettreejson1', 'gettreejson2', 'sitemap']);
 
-gulp.task('default', ['sass', 'js', 'assemble']);
+gulp.task('default', ['sass', 'js', 'assemble', 'readmdtohtml']);
 

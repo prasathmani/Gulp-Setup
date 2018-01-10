@@ -98,7 +98,7 @@
         <ul>
             <% _.each(maps, function(m) { %>
                 <li>
-                    <a href="javascript:void(0)" onclick="openComponent('<%= m.path%>', '<%= m.title %>')"><%= m.title %></a>
+                    <a href="javascript:void(0)" onclick="openComponent('<%= m.path%>', '<%= m.readme%>', '<%= m.title %>')"><%= m.title %></a>
                 </li>
             <% }); %>
         </ul>
@@ -112,16 +112,12 @@
                     <li class="browser-tab browser-tab--html"
                         <a href="#html" onclick="showTab('html')">HTML</a>
                     </li>
-                    <li class="browser-tab browser-tab--view"
-                        <a href="#views" onclick="showTab('views')">View</a>
-                    </li>
                     <li class="browser-tab browser-tab--readme"
                         <a href="#readme" onclick="showTab('readme')">Read Me</a>
                     </li>
                 </ul>
             </div>
             <div class="browser-panel browser-code html-code" id="html"><pre><code class="html" id="htmlcode"></code></pre></div>
-            <div class="browser-panel browser-code" id="views"></div>
             <div class="browser-panel browser-code" id="readme"></div>
         </div>
     </div>
@@ -133,7 +129,7 @@
                 return entityMap[s];
             });
         }
-        var openComponent = function(src, id) {
+        var openComponent = function(src, readmesrc, id) {
             var iframe = document.getElementById('frame');
             iframe.src= src;
             
@@ -144,17 +140,19 @@
                     hljs.highlightBlock(block);
                 })
             })
+
+            $.get(readmesrc, function(data) {
+                $('#readme').html(data);
+            })
         }
 
         var showTab = function(tabid) {
             var tabtoshow = document.getElementById(tabid);
-            var htmlTab, viewsTab, readmeTab;
+            var htmlTab, readmeTab;
             htmlTab = document.getElementById('html');
-            viewsTab = document.getElementById('views');
             readmeTab = document.getElementById('readme');
 
             htmlTab.style.display = 'none';
-            viewsTab.style.display = 'none';
             readmeTab.style.display = 'none';
             tabtoshow.style.display = 'block';
 
