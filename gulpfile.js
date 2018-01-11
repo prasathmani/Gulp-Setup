@@ -19,12 +19,23 @@ var template = require('gulp-template');
 var runSequence = require('run-sequence');
 var inject = require('gulp-inject');
 var markdown = require('gulp-markdown');
+var header = require('gulp-header');
+var watch = require('gulp-watch');
+var changed = require('gulp-changed');
 //var handlebars = require('gulp-compile-handlebars');
 
 //file path
 var DEST = './build';
 var DEST2 = './dest';
 var json = JSON.parse(fs.readFileSync('./dist/tree.json'));
+var pkg = require('./package.json');
+
+var fileHeader = ['/**',
+  ' * <%= pkg.name %> - <%= pkg.description %>',
+  ' * @version v<%= pkg.version %>',
+  ' * @Date <%= new Date().toLocaleString() %>',
+  ' */',
+  ''].join('\n');
 
 gulp.task('load', function(cb) {
    hbscompiler.layouts('templates/layouts/*.hbs');
@@ -46,6 +57,7 @@ gulp.task('js', function() {
   return gulp.src('src/components/**/*.js')
     // This will output the non-minified version
     .pipe(babel({ignore: 'gulpfile.js'}))
+    .pipe(header(fileHeader, { pkg : pkg } ))
     .pipe(gulp.dest(DEST))
     // This will minify and rename to filename.min.js
     .pipe(uglify())
@@ -57,6 +69,7 @@ gulp.task('js', function() {
 gulp.task('sass', function () {
   return gulp.src('src/components/**/*.scss')
       .pipe(sass())
+      .pipe(header(fileHeader, { pkg : pkg } ))
       .pipe(gulp.dest(DEST))
       .pipe(sass({outputStyle: 'compressed'}))
       .pipe(rename({ extname: '.min.css' }))
@@ -65,8 +78,10 @@ gulp.task('sass', function () {
 
 //ES6 - convert javascript from ES6 to ES5 using Babel
 gulp.task('es6', () => {
-  return gulp.src('src/js/*.js')
+  return gulp.src('src/components/**/*.js')
+      .pipe(changed(DEST))
       .pipe(babel({ignore: 'gulpfile.js'}))
+      .pipe(header(fileHeader, { pkg : pkg } ))
       .pipe(gulp.dest(DEST));
 });
 
@@ -130,12 +145,13 @@ gulp.task('readmdtohtml',() => {
 })
 
 gulp.task('watch', () => {
-  return gulp.watch('src/js/*.js', ['es6']);
+  return gulp.watch('src/components/**/*.js', ['es6']);
 });
 
 gulp.task('build-sitemap', function (cb) {
   runSequence(['gettreejson1', 'gettreejson2', 'sitemap'], cb);
 });
+
 // gulp.task('build-sitemap', ['gettreejson1', 'gettreejson2', 'sitemap']);
 
 gulp.task('default', ['sass', 'js', 'assemble', 'readmdtohtml']);
