@@ -1,3 +1,3 @@
-import {utilities} from './utilities.js';
+import foo from './utilities.js';
 
-let footer12 = () => {let variable = utilities.foo; return variable;}
+let footerChanged = () => {let variable = foo; return variable;}

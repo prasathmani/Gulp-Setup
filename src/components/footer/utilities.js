@@ -1,1 +1,3 @@
-let foo = 999888;
+let foo = 'Welcomes';
+
+export default foo;
