@@ -43,7 +43,7 @@ gulp.task('load', function(cb) {
   //hbscompiler.pages('templates/pages/*.hbs');
   cb();
 });
- 
+
 gulp.task('assemble', ['load'], function() {
   return hbscompiler.toStream('pages')
     .pipe(hbscompiler.renderFile())
@@ -92,7 +92,7 @@ gulp.task('mocha', function() {
 
 gulp.task('gettreejson1', () => {
   return gulp.src('./build/**/*.html')
-      .pipe(gft()) 
+      .pipe(gft())
       .pipe(gulp.dest('./dest'))
 })
 
@@ -112,12 +112,12 @@ gulp.task('gettreejson2', function() {
     var title, children= data.children, obj={}; arr=[];
     for (var i=0; i<children.length; i++) {
         obj = {};
-        obj['title'] = children[i].children[0].name.replace(".html", ""); 
-        obj['path'] = '/build/'+ children[i].children[0].relative.replace("\\", "/");
-        obj['readme'] = '/build/'+ children[i].children[0].name.replace(".html", "") + '/README.md';
+        obj['title'] = children[i].children[0].name.replace(".html", "");
+        obj['path'] = '../build/'+ children[i].children[0].relative.replace("\\", "/");
+        obj['readme'] = '../build/'+ children[i].children[0].name.replace(".html", "") + '/README.md';
         arr.push(obj);
     }
-    return {"maps": arr};   
+    return {"maps": arr};
   }))
   .pipe(gulp.dest('./dist'));
 });
@@ -155,4 +155,3 @@ gulp.task('build-sitemap', function (cb) {
 // gulp.task('build-sitemap', ['gettreejson1', 'gettreejson2', 'sitemap']);
 
 gulp.task('default', ['sass', 'js', 'assemble', 'readmdtohtml']);
-
