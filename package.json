@@ -9,19 +9,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/UjjwalUpadhyay/GulpRepo.git"
+    "url": "git+https://github.com/prasathmani/GulpRepo.git"
   },
   "keywords": [
     "Gulp",
     "Project",
     "setup"
   ],
-  "author": "Ujjwal Upadhyay | Prasath Mani",
+  "author": "Prasath Mani",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/UjjwalUpadhyay/GulpRepo/issues"
+    "url": "https://github.com/prasathmani/GulpRepo/issues"
   },
-  "homepage": "https://github.com/UjjwalUpadhyay/GulpRepo#readme",
+  "homepage": "https://github.com/prasathmani/GulpRepo#readme",
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.0.0-beta.37",
     "assemble": "^0.24.3",

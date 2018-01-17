@@ -11,24 +11,18 @@ These instructions will get you a copy of the project up and running on your loc
 What things you need to install the software and how to install them
 
 ```   ```
-Node, Gulp
+Node
+Gulp
 ```   ```
 
 ### Installing
 
 
-1. npm start
+1. npm install
 
-2. gulp build-sitemap
+2. gulp
 
 
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-here..
-```
 
 ## Deployment
 
