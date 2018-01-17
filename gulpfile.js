@@ -99,20 +99,19 @@ gulp.task('lint', function() {
 gulp.task('pre-commit', function () {
   return gulp.src(guppy.src('pre-commit'))
     .pipe(gulpFilter(['src/components/**/*.js']))
-    .pipe(jshint())
+    .pipe(jshint({ esversion: 6 }))
     .pipe(jshint.reporter(stylish))
     .pipe(jshint.reporter('fail'));
 });
 
-// gulp.task('pre-push', guppy.src('pre-push', function (files, extra, cb) {
-//   var branch = execSync('git rev-parse --abbrev-ref HEAD');
- 
-//   if (branch === 'master') {
-//     cb('Don\'t push master!')
-//   } else {
-//     cb();
-//   }
-// }));
+gulp.task('pre-push', guppy.src('pre-push', function (files, extra, cb) {
+  // var branch = execSync('git rev-parse --abbrev-ref HEAD');
+  // if (branch === 'master') {
+  //   cb('Don\'t push master!')
+  // } else {
+    cb();
+  // }
+}));
 
 gulp.task('mocha', function() {
   return gulp.src(['test/*.js'], {read: false})
