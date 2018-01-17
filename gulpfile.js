@@ -25,6 +25,7 @@ var changed = require('gulp-changed');
 var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
 var guppy = require('git-guppy')(gulp);
+var gulpFilter = require('gulp-filter');
 
 //file path
 var DEST = './build';
@@ -102,6 +103,16 @@ gulp.task('pre-commit', function () {
     .pipe(jshint.reporter(stylish))
     .pipe(jshint.reporter('fail'));
 });
+
+// gulp.task('pre-push', guppy.src('pre-push', function (files, extra, cb) {
+//   var branch = execSync('git rev-parse --abbrev-ref HEAD');
+ 
+//   if (branch === 'master') {
+//     cb('Don\'t push master!')
+//   } else {
+//     cb();
+//   }
+// }));
 
 gulp.task('mocha', function() {
   return gulp.src(['test/*.js'], {read: false})
