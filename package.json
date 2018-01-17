@@ -50,7 +50,8 @@
     "jshint-stylish": "^2.2.1",
     "marked": "^0.3.12",
     "path": "^0.12.7",
-    "run-sequence": "^2.2.1"
+    "run-sequence": "^2.2.1",
+    "shelljs": "^0.8.0"
   },
   "dependencies": {}
 }

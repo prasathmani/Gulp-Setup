@@ -19,6 +19,7 @@ var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
 var guppy = require('git-guppy')(gulp);
 var gulpFilter = require('gulp-filter');
+var shell = require('shelljs');
 
 //file path
 var DEST = './build';
@@ -96,13 +97,18 @@ gulp.task('pre-commit', function () {
 });
 
 gulp.task('pre-push', guppy.src('pre-push', function (files, extra, cb) {
-  // var branch = execSync('git rev-parse --abbrev-ref HEAD');
-  // if (branch === 'master') {
-  //   cb('Don\'t push master!')
-  // } else {
+  var branch = shell.exec('git rev-parse --abbrev-ref HEAD');
+  if (branch === 'master') {
     cb();
-  // }
+  } else {
+    cb('Invalid branch')
+  }
 }));
+
+gulp.task('test', function() {
+  var result = shell.exec('git rev-parse --abbrev-ref HEAD');
+	console.log('return code ' + result);
+});
 
 gulp.task('mocha', function() {
   return gulp.src(['test/*.js'], {read: false})
