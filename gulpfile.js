@@ -94,14 +94,14 @@ gulp.task('lint', function() {
     .pipe(jshint.reporter(stylish));
 });
 
-// less contrived example 
-gulp.task('pre-commit', guppy.src('pre-commit', function (filesBeingCommitted) {
-  return gulp.src(filesBeingCommitted)
-    .pipe(gulpFilter(['*.js']))
+//pre git commit validation
+gulp.task('pre-commit', function () {
+  return gulp.src(guppy.src('pre-commit'))
+    .pipe(gulpFilter(['src/components/**/*.js']))
     .pipe(jshint())
     .pipe(jshint.reporter(stylish))
     .pipe(jshint.reporter('fail'));
-}));
+});
 
 gulp.task('mocha', function() {
   return gulp.src(['test/*.js'], {read: false})
