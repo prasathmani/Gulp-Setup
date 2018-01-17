@@ -98,17 +98,14 @@ gulp.task('pre-commit', function () {
 
 gulp.task('pre-push', guppy.src('pre-push', function (files, extra, cb) {
   var branch = shell.exec('git rev-parse --abbrev-ref HEAD');
-  if (branch === 'master') {
+ // console.log('OutPut:',branch.stdout);
+ // var currentBranch = branch.stdout;
+ // if (branch == 'master') {
     cb();
-  } else {
-    cb('Invalid branch')
-  }
+  //} else {
+  //  cb('Invalid branch')
+  //}
 }));
-
-gulp.task('test', function() {
-  var result = shell.exec('git rev-parse --abbrev-ref HEAD');
-	console.log('return code ' + result);
-});
 
 gulp.task('mocha', function() {
   return gulp.src(['test/*.js'], {read: false})
