@@ -9,16 +9,9 @@ var extname = require('gulp-extname');
 var assemble = require('assemble');
 var hbscompiler = assemble();
 var marked = require('marked');
-var sitemap = require('gulp-sitemap-generator');
-var gft = require('gulp-file-tree');
-var jsonTransform = require('gulp-json-transform');
-var data = require('gulp-data');
-var fs = require('fs');
 var path = require('path');
 var template = require('gulp-template');
 var runSequence = require('run-sequence');
-var inject = require('gulp-inject');
-var markdown = require('gulp-markdown');
 var header = require('gulp-header');
 var watch = require('gulp-watch');
 var changed = require('gulp-changed');
@@ -29,8 +22,6 @@ var gulpFilter = require('gulp-filter');
 
 //file path
 var DEST = './build';
-var DEST2 = './dest';
-var json = JSON.parse(fs.readFileSync('./dist/tree.json'));
 var pkg = require('./package.json');
 
 var fileHeader = ['/**',
@@ -41,7 +32,7 @@ var fileHeader = ['/**',
   ''].join('\n');
 
 gulp.task('load', function(cb) {
-   hbscompiler.layouts('templates/layouts/*.hbs');
+   hbscompiler.layouts('src/templates/layouts/*.hbs');
    hbscompiler.pages('src/components/**/*.hbs');
   //hbscompiler.pages('templates/pages/*.hbs');
   cb();
@@ -115,71 +106,11 @@ gulp.task('pre-push', guppy.src('pre-push', function (files, extra, cb) {
 
 gulp.task('mocha', function() {
   return gulp.src(['test/*.js'], {read: false})
-              .pipe(mocha({reporter: 'list'}))
+    .pipe(mocha({reporter: 'list'}))
 });
-
-gulp.task('gettreejson1', () => {
-  return gulp.src('./build/**/*.html')
-      .pipe(gft())
-      .pipe(gulp.dest('./dest'))
-})
-
-// gulp.task('gettreejson2', function() {
-//   gulp.src('./dest/*.json')
-//   .pipe(jsonTransform(function(data, file) {
-//     return {
-//       title: 'AEM'
-//   };
-//   }))
-//   .pipe(gulp.dest('./dist'));
-// });
-
-gulp.task('gettreejson2', function() {
-  gulp.src('./dest/*.json')
-  .pipe(jsonTransform(function(data, file) {
-    var title, children= data.children, obj={}; arr=[];
-    for (var i=0; i<children.length; i++) {
-        obj = {};
-        obj['title'] = children[i].children[0].name.replace(".html", "");
-        obj['path'] = '../build/'+ children[i].children[0].relative.replace("\\", "/");
-        obj['readme'] = '../build/'+ children[i].children[0].name.replace(".html", "") + '/README.md';
-        arr.push(obj);
-    }
-    return {"maps": arr};
-  }))
-  .pipe(gulp.dest('./dist'));
-});
-
-
-gulp.task('sitemap', function() {
-  return gulp.src('./map.html')
-    .pipe(data(() => json))
-    .pipe(template())
-    .pipe(inject(gulp.src(['./src/partials/head/*.html']), {
-      starttag: '<!-- inject:{{path}} -->',
-      relative: true,
-      transform: function (filePath, file) {
-        // return file contents as string
-        return file.contents.toString('utf8')
-      }
-    }))
-    .pipe(gulp.dest('./sitemap'));
-});
-
-gulp.task('readmdtohtml',() => {
-  gulp.src('src/components/**/*.md')
-        .pipe(markdown())
-        .pipe(gulp.dest(DEST))
-})
 
 gulp.task('watch', () => {
   return gulp.watch('src/components/**/*.js', ['es6']);
 });
 
-gulp.task('build-sitemap', function (cb) {
-  runSequence(['gettreejson1', 'gettreejson2', 'sitemap'], cb);
-});
-
-// gulp.task('build-sitemap', ['gettreejson1', 'gettreejson2', 'sitemap']);
-
-gulp.task('default', ['sass', 'js', 'assemble', 'readmdtohtml']);
+gulp.task('default', ['sass', 'js', 'assemble']);
