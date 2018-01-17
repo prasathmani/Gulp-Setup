@@ -22,7 +22,9 @@ var markdown = require('gulp-markdown');
 var header = require('gulp-header');
 var watch = require('gulp-watch');
 var changed = require('gulp-changed');
-//var handlebars = require('gulp-compile-handlebars');
+var jshint = require('gulp-jshint');
+var stylish = require('jshint-stylish');
+var guppy = require('git-guppy')(gulp);
 
 //file path
 var DEST = './build';
@@ -84,6 +86,22 @@ gulp.task('es6', () => {
       .pipe(header(fileHeader, { pkg : pkg } ))
       .pipe(gulp.dest(DEST));
 });
+
+//JSHint is a program that flags suspicious usage in programs written in JavaScript
+gulp.task('lint', function() {
+  return gulp.src('src/components/**/*.js')
+    .pipe(jshint({ esversion: 6 }))
+    .pipe(jshint.reporter(stylish));
+});
+
+// less contrived example 
+gulp.task('pre-commit', guppy.src('pre-commit', function (filesBeingCommitted) {
+  return gulp.src(filesBeingCommitted)
+    .pipe(gulpFilter(['*.js']))
+    .pipe(jshint())
+    .pipe(jshint.reporter(stylish))
+    .pipe(jshint.reporter('fail'));
+}));
 
 gulp.task('mocha', function() {
   return gulp.src(['test/*.js'], {read: false})
