@@ -98,13 +98,12 @@ gulp.task('pre-commit', function () {
 
 gulp.task('pre-push', guppy.src('pre-push', function (files, extra, cb) {
   var branch = shell.exec('git rev-parse --abbrev-ref HEAD');
- // console.log('OutPut:',branch.stdout);
- // var currentBranch = branch.stdout;
- // if (branch == 'master') {
+  var currentBranch = branch.match( /master/i );
+  if (currentBranch[0] === 'master') {
     cb();
-  //} else {
-  //  cb('Invalid branch')
-  //}
+  } else {
+    cb('Invalid branch name')
+  }
 }));
 
 gulp.task('mocha', function() {
