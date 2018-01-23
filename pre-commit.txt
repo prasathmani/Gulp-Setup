@@ -1,0 +1,33 @@
+#!/usr/bin/env node
+'use strict';
+
+var spawn = require('child_process').spawn;
+var execSync = require('child_process').execSync;
+var cwd = process.env.PWD || process.cwd();
+
+
+var path = require('path');
+var hookName = process.argv[1].split(path.sep).pop();
+var restArgs = process.argv.slice(2).join('\u263a');
+
+process.env.HOOK_ARGS = restArgs;
+
+var gulp = (process.platform === 'win32' ? 'gulp.cmd' : 'gulp');
+var dir = path.join(process.cwd(), 'xt/node_modules/.bin').toString().trim();
+
+cwd = path.join(cwd,'xt');
+
+var hook = spawn(path.join(dir, gulp), [hookName], {
+  stdio: 'inherit',
+  cwd: cwd
+});
+
+hook.on('close', function (code) {
+  process.exit(code);
+});
+
+// catch exceptions so node doesn't exit prematurely, leaving a runaway process
+process.on('uncaughtException', function (err) {
+  console.error(err.stack);
+  hook.kill('SIGHUP');
+});
