@@ -112,10 +112,18 @@ gulp.task('pre-push', guppy.src('pre-push', function (files, extra, cb) {
   }
 }));
 
+gulp.task('pre-receive', guppy.src('pre-receive', function (files, extra, cb) {
+  console.log('P-R', files,' ~ ',extra);
+}));
+
+gulp.task('post-receive', guppy.src('post-receive', function (files, extra, cb) {
+  console.log('R-R', files,' ~ ',extra);
+}));
 
 gulp.task('post-update', guppy.src('post-update', function (files, extra, cb) {
-  console.log(files,' ~ ',extra);
+  console.log('P-U', files,' ~ ',extra);
 }));
+
 
 gulp.task('slack', () => {
    

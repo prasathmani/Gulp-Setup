@@ -47,6 +47,7 @@
     "gulp-uglify": "^3.0.0",
     "gulp-watch": "^5.0.0",
     "guppy-post-update": "^0.2.1",
+    "guppy-pre-receive": "^0.2.1",
     "jshint": "^2.9.5",
     "jshint-stylish": "^2.2.1",
     "marked": "^0.3.12",
@@ -55,6 +56,7 @@
     "shelljs": "^0.8.0"
   },
   "dependencies": {
+    "guppy-post-receive": "^0.2.1",
     "slack-node": "^0.1.8"
   }
 }
