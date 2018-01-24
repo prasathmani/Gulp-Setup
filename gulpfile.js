@@ -103,6 +103,7 @@ gulp.task('pre-commit', function () {
 });
 
 gulp.task('pre-push', guppy.src('pre-push', function (files, extra, cb) {
+	console.log(files, extra);
   var branch = shell.exec('git rev-parse --abbrev-ref HEAD');
   var currentBranch = branch.match( /master/i );
   if (currentBranch[0] === 'master') {
