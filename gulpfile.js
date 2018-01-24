@@ -20,6 +20,7 @@ var stylish = require('jshint-stylish');
 var guppy = require('git-guppy')(gulp);
 var gulpFilter = require('gulp-filter');
 var shell = require('shelljs');
+var Slack = require('slack-node');
 
 //file path
 var DEST = './build';
@@ -80,6 +81,11 @@ gulp.task('es6', () => {
       .pipe(gulp.dest(DEST));
 });
 
+gulp.task('mocha', function() {
+  return gulp.src(['test/*.js'], {read: false})
+    .pipe(mocha({reporter: 'list'}))
+});
+
 //JSHint is a program that flags suspicious usage in programs written in JavaScript
 gulp.task('lint', function() {
   return gulp.src('src/components/**/*.js')
@@ -106,9 +112,25 @@ gulp.task('pre-push', guppy.src('pre-push', function (files, extra, cb) {
   }
 }));
 
-gulp.task('mocha', function() {
-  return gulp.src(['test/*.js'], {read: false})
-    .pipe(mocha({reporter: 'list'}))
+
+gulp.task('post-update', guppy.src('post-update', function (files, extra, cb) {
+  console.log(files,' ~ ',extra);
+}));
+
+gulp.task('slack', () => {
+   
+	webhookUri = "https://hooks.slack.com/services/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";
+	 
+	slack = new Slack();
+	slack.setWebhook(webhookUri);
+	 
+	slack.webhook({
+	  channel: "#xt",
+	  username: "TNC",
+	  text: "<https://www.npmjs.com/package/slack-node|[ec3:feature/123-new-component]> 1 new commit by Prasath Mani \n Updated gulp post-push git task"
+	}, function(err, response) {
+	  console.log(response);
+	});
 });
 
 gulp.task('watch', () => {
